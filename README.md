@@ -10,7 +10,7 @@ Idea being that maybe the fuel price impacts flight planning or ticket pricing a
 Source: https://www.faa.gov/airports/engineering/aircraft_char_database/data  
 Idea being to add some global aircraft characteristics for the machine learning model to consider.  
 
-These datasets are explored and prepared here: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Submission/blob/main/notebooks/Step%202%20-%20Other%20databases%20-%20Fuel%20%26%20FAA.ipynb
+These datasets are explored and prepared here: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Public/blob/main/notebooks/Step%202%20-%20Other%20databases%20-%20Fuel%20%26%20FAA.ipynb
 
 *Outlook*: The request was made to get access to the BADA data, but not granted (yet).
 
@@ -23,7 +23,7 @@ To overcome network as well as disc space limitations, the *.parquet files are d
         t_clean = t.first(minutes=20).filter().resample('10s').eval()
 ```
 
-See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Submission/blob/main/notebooks/Step%209%20-%20Download%20%26%20Clean%20PRC.ipynb
+See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Public/blob/main/notebooks/Step%209%20-%20Download%20%26%20Clean%20PRC%20-%20cleaned.ipynb
 
 *Outlook*: More efforts would be need to better clean the data.
 
@@ -33,21 +33,21 @@ Using the *.parquet flight tracks, features characterising the climb in order to
 - Computing rate of climb (RoC) in the segment FL100 to FL200 (as a compromise considering data availability and quality) and later also FL50 to FL100.
 - Computing "specific energy rate" using change of TAS and ROC. This being inspired by https://enac.hal.science/hal-01002401/document and https://ntrs.nasa.gov/api/citations/20230014062/downloads/TMPI_DASC23_AidaRohani.pdf
 
-See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Submission/blob/main/notebooks/Step%2011%20-%20Compute%20Track%20Features%20-%20Simple%20RoC%20and%20TAS.ipynb
+See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Public/blob/main/notebooks/Step%2011%20-%20Compute%20Track%20Features%20-%20Simple%20RoC%20and%20TAS.ipynb
 
 *Outlook*: More efforts would be needed to explore for which climb segments the most tracks of sufficient quality are available. Furthermore, a number of simplifications were made (e.g. neglecting the temperature effect on RoC, failed attempt to extract a good feature to account for the effect track changes / turns have on the climb specific energy rate).
 
 # Descent feature extraction
 Analogous to the above described climb features, features for the descent are computed. Key idea was to use these in particular for those flights for which no or no good quality of climb feature are available.
 
-See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Submission/blob/main/notebooks/Step%2011%20-%20Compute%20Track%20Features%20-%20Simple%20RoD.ipynb
+See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Public/blob/main/notebooks/Step%2011%20-%20Compute%20Track%20Features%20-%20Simple%20RoD.ipynb
 
 *Outlook*: Baseline for these descent features are not the final *.parquet files, but the outdated version. Reprocessing would be advisable. Also only FL300 down to FL200 was considered as a first shot. No checking and cleaning applied yet.
 
 # TOW prediction models
 The actual TOW prediction is based on two XGBoost models. 
 
-See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Submission/blob/main/notebooks/Step%2013%20-%20Second%20Submisson%20Model.ipynb
+See: https://github.com/olinbus/PRC_DataChallenge_Patient_Net_Public/blob/main/notebooks/Step%2013%20-%20Second%20Submisson%20Model%20-%20cleaned.ipynb
 
 ## Global model on all flights¶
 The first XGBoost model called "global" in the code is intended to capture the "statistics" and "patterns" given in the challenge_set.csv. 
